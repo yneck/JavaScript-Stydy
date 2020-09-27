@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*1、map*/
+    Array.prototype.myMap=function (callback) {
+        let arr=[];
+        for (let i=0;i<this.length;i++){//遍历数组根据函数处理数据返回一个新数组
+            let element=this[i];
+            let result=callback(element,i)
+            arr.push(result)
+        }
+        return arr;
+    }
+    // let testArr=[1,2,3,4];
+    // let newTestArr=testArr.myMap((item,i)=>{ return item+1})
+    // let newTestArr=testArr.myMap((item,i)=>{ return item>1})
+
+    /*2、reduce*/
+    Array.prototype.myReduce=function (callback,initValue) {
+        let defaultVlaue=initValue || 0;
+        for (let i=0;i<this.length;i++){
+            let element=this[i];
+            defaultVlaue=callback(defaultVlaue,element,i,this)
+        }
+        return defaultVlaue;
+    }
+
+    // let testArr=[1,2,3,4];
+    // let newTestArr=testArr.myReduce((pre,item,index,arr)=>{
+    //     return pre+=item;
+    // },10)
+
+    /*3、filter*/
+    Array.prototype.myfilter=function (callback) {
+            let arr=[];
+            for (let i=0;i<this.length;i++){
+                let element=this[i];
+                let result=callback(element)
+                if (result){
+                    arr.push(element)
+                }
+            }
+            return arr;
+    }
+    // let testArr=[1,2,3,4];
+    // let newTestArr=testArr.myfilter((item)=>{return item>2;})
+
+
+    /*3、find*/
+    Array.prototype.myfind=function (callback) {
+        if (typeof callback != 'function'){
+            throw 'argument is must function'
+        }
+        for (let i=0;i<this.length;i++){
+            let element=this[i];
+            if (callback(element)){
+                return element
+            }
+        }
+        return  undefined
+    }
+    // let testArr=[1,2,3,4];
+    // let newTestArr=testArr.myfind((item)=>{return item>5;})
+
+    /*3、findIndex*/
+    Array.prototype.myfindIndex=function (callback) {
+        if (typeof callback != 'function'){
+            throw 'argument is must function'
+        }
+            for (let i=0;i<this.length;i++){
+                let element=this[i];
+                if (callback(element)){
+                    return i
+                }
+            }
+        return  -1
+    }
+    // let testArr=[1,2,3,4];
+    // let newTestArr=testArr.myfindIndex((item)=>{return item==3;})
+
+    /*4、every*/
+    Array.prototype.myEvery=function (callback) {
+        if (typeof callback !='function'){
+            throw 'arguments is must function'
+        }
+        for (let i=0;i<this.length;i++){
+            let element=this[i];
+            if (!callback(element))return false;
+        }
+        return true;
+    }
+    // let testArr=[1,2,3,4];
+    // let newTestArr=testArr.myEvery((item)=>{return item>=2;})
+
+    /*4、some*/
+    Array.prototype.mySome=function (callback) {
+        if (typeof callback !='function'){
+            throw 'arguments is must function'
+        }
+        for (let i=0;i<this.length;i++){
+            let element=this[i];
+            if (callback(element))return true;
+        }
+        return false;
+    }
+    let testArr=[1,2,3,4];
+    let newTestArr=testArr.mySome((item)=>{return item>=6;})
+
+</script>
+</body>
+</html>

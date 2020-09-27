@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            height: 200px;
+        }
+        /*float写法*/
+        .float .left{
+            width: 300px;
+            float: left;
+            height: 200px;
+            background: red;
+        }
+        .float .right{
+            width: 300px;
+            float: right;
+            height: 200px;
+            background: blue;
+        }
+        .float .center{
+            background: aqua;
+            height: 200px;
+        }
+        /*absolute*/
+        .absolute>div{
+            position: absolute;
+        }
+        .absolute .left{
+            left: 0;
+            width: 200px;
+            background: red;
+            height: 200px;
+        }
+        .absolute .right{
+            right: 0;
+            width: 200px;
+            background:blue;
+            height: 200px;
+        }
+        .absolute .center{
+            left: 200px;
+            right: 200px;
+            background: yellow;
+            height: 200px;
+        }
+        /*margin*/
+        .margin .center{
+            width: 100%;
+            float: left;
+        }
+        .margin .center .main{
+            margin:0 100px;
+            background: yellow;
+        }
+        .margin .left{
+            width: 300px;
+            margin-left: -100%;
+            background: blue;
+            float: left;
+        }
+        .margin .right{
+            width: 300px;
+            float:right;
+            margin-right: -300px;
+            background: red;
+        }
+    </style>
+
+
+</head>
+<body>
+<h1>float写法</h1>
+<div class="float">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="center">222222222222</div>
+</div>
+<br>
+<br>
+<h1>absolute写法</h1>
+<div class="absolute">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="center">222222222222</div>
+</div>
+<br>
+<br>
+<h1>margin负值</h1>
+<div class="margin">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="center">
+        <div class="main"></div>
+    </div>
+</div>
+</body>
+</html>

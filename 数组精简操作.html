@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//去重
+		var arr=[1,2,3,4,5,6,1,1,1,2,3,8,23]
+		//第一种方式
+		var firstArr=Array.from(new Set(arr));
+		console.log(firstArr)
+		//方法二
+		var secondArr=[...new Set(arr)];
+		console.log(secondArr)
+
+		//改变原数组
+		var testArr=["hello","hi","ok","eat"];
+		testArr.splice(0, 2,"first","second");
+		console.log(testArr)
+
+		//使用Array.from实现map效果
+		var people=[
+			{name:"张三",age:22},
+			{name:"李四",age:23},
+			{name:"大傻",age:24},
+			{name:"二傻",age:24},
+		]
+		var peoArr=Array.from(people,item=>item.name)
+		console.log(peoArr)
+
+		// 将数组转为对象
+		var arrTObj=["kkk","bbb","ooo"];
+		var newObj={...arrTObj};
+		console.log(newObj)
+
+
+		//用数据填充数组
+		var fillArr=new Array(10).fill("a");
+		console.log(fillArr)
+
+		// 数组合并
+		var arr1=["a",'b','c'];
+		var arr2=["c","d",'e'];
+		var arr3=[1,2,3,4];
+		var newArr=[...arr1,...arr2,...arr3];
+		console.log(newArr)
+
+		//两个数组交集
+		var num1=[0,2,5,2,3,4,5,6,7];
+		var num2=[1,3,5,32,43];
+		// var newNum=[...new Set(num1)].filter(function(index) {
+		// 	console.log(index)
+		// 	return num2.includes(index)
+		// });
+		var newNum=[...new Set(num1)].filter(item=> num2.includes(item));
+		console.log(newNum)
+
+		//删除数组中的虚值
+		//js中虚值包含false, 0，''， null, NaN, undefined
+		var mixedArr=[false,0,1,"","hello",null,"hi",NaN,undefined];
+		var trueArr=mixedArr.filter(Boolean);
+		console.log(trueArr);
+
+		// 取数组中随机值
+		var suijiArr=["随机1","随机2","随机3","随机4","随机5","随机6"];
+		var  randomName=suijiArr[Math.floor((Math.random()*(suijiArr.length)))];
+		console.log(randomName)
+
+		// 数组反转
+		var reverseArr=[1,2,3,4,5,6,7];
+		var newReverseArr=reverseArr.reverse();
+		console.log(newReverseArr)
+
+		//在数组中找某个值最后出现的位置
+		var nums=[1,2,3,4,5,6,23,4,5,6,3];
+		var lastIndex=nums.lastIndexOf(6);
+		console.log(lastIndex)
+
+		// 数组求和
+		var addNum=[1,2,3,4,5];
+		var total=addNum.reduce((x,y)=>{
+			console.log(x,y)
+			return x+y;
+		})
+		console.log(total)
+	</script>
+
+</body>
+</html>

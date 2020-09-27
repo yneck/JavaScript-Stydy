@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function render() {
+        console.log('视图重新渲染')
+    }
+    let data={
+        name:"嘻哈",
+        location:{x:100,y:200}
+    }
+    function observe(obj) {
+        if (!obj || typeof obj !=='object')return;
+        Object.keys(obj).forEach(key=>{
+            defineReactive(obj,key,obj[key])
+        })
+        function defineReactive (obj,key,value) {
+            observe(value);
+            Object.defineProperty(obj,key,{
+                enumerable:true,//可枚举
+                configurable:false,//可操作，如删除
+                get() {
+                    console.log('get',value)
+                    return value;
+                },
+                set(v) {
+                    observe(v)
+                    if (v!==value){
+                        console.log('set',v)
+                        render()
+                        value=v;
+                    }
+                }
+            })
+        }
+
+
+    }
+    // observe(data);
+
+    let handle={
+        get(target,key){
+            console.log(target);
+            console.log(key);
+            if (typeof  target[key]=='object' && target[key]!=null){
+                return new Proxy(target[key],handle)
+            }
+            return Reflect.get(target,key)
+        },
+        set(target,key,value){
+            if (key==='length')return true;
+            render()
+            return Reflect.set(target,key,value)
+        }
+    }
+    let proxy=new Proxy(data,handle);
+    // proxy.location.age='222';
+    proxy.name='测试'
+    // console.log(proxy.location.age);
+
+
+</script>
+</body>
+</html>
