@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+/*
+* async 作用返回一个promise对象
+* */
+    async function testAsync() {
+         // 'hello Async'
+    }
+    let result=testAsync()
+    // console.log(result);
+    testAsync().then(v=>{
+        // console.log(v);
+    })
+
+    function getSomething() {
+        return 'something'
+    }
+    async  function testAsync2() {
+        return Promise.resolve('hello async')
+    }
+    async  function test() {
+        const v1=await getSomething()
+        const v2=await testAsync2()
+        console.log(v1,v2)
+    }
+    test()
+
+/*
+* 业务分步骤执行
+* */
+    function takeLongTime(n) {
+        return new Promise(resolve => {
+            setTimeout(() => resolve(n + 200), n);
+        });
+    }
+
+    function step1(n) {
+        console.log(`step1 with ${n}`);
+        return takeLongTime(n);
+    }
+
+    function step2(n) {
+        console.log(`step2 with ${n}`);
+        return takeLongTime(n);
+    }
+
+    function step3(n) {
+        console.log(`step3 with ${n}`);
+        return takeLongTime(n);
+    }
+
+//    第一种用promise方式
+    function dot() {
+        const time1=300;
+        step1(time1).then(time2=>{
+            step2(time2).then(time3=>{
+                step3(time3).then(result=>{
+                    console.log(result)
+                    console.log('end dot')
+                })
+            })
+        })
+    }
+    // dot()
+
+//    第二种 用async方式
+    async function dot2() {
+        const time=300;
+        const time1=await step1(time)
+        const time2=await step2(time1)
+        const time3=await step3(time2)
+        console.log(time3)
+        console.log('end dot')
+    }
+    dot2()
+</script>
+</body>
+</html>
