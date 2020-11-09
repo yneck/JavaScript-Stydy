@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+    * 柯里化：是把接受多个参数的函数转变为单一参数的函数，并且返回接受余下的参数且返回结果的新函数的技术。
+    *
+    * */
+    function add() {
+        const numberList=Array.from(arguments);
+        debugger
+        const calculate = function() {
+            numberList.push(...arguments);
+            console.log(numberList);
+            return calculate;
+        }
+
+        calculate.toString = function() {
+
+            return numberList.reduce((a, b) => a + b, 0);
+        }
+        return calculate;
+    }
+
+    console.log(add(1));
+    console.log(add(1)(2));
+
+
+</script>
+</body>
+</html>
