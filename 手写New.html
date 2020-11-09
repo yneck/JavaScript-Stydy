@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function myNew(fun,...argument) {
+        if (typeof fun !=='function'){
+            throw 'fun 必须是方法体'
+        }
+        const obj={};
+        obj.__proto__=Object.create(fun.prototype);
+
+        let result=fun.apply(obj,argument)
+
+        const isObject=typeof result==='object' && typeof result!=='null'
+        const isFunction=typeof result==='function';
+        return isObject || isFunction ? result : obj;
+    }
+
+
+</script>
+</body>
+</html>

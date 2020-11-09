@@ -1,4 +1,3 @@
 # JavaScript-Stydy
-JavaScript学习
-sxxxxxxxxxxxxxx
-git tijiao ceshi sdf
+JavaScript 基础知识学习
+

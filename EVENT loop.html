@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // console.log(1);
+    // setTimeout(() => {//宏队列
+    //     //回调函数成为callback1 setTimeout属于Macrotask 所以放到MA中
+    //     console.log(2);
+    //     Promise.resolve().then(() => {
+    //         //callback4
+    //         console.log(3)
+    //     });
+    // });
+    // new Promise((resolve, reject) => {
+    //     //promise这里是同步执行
+    //     console.log(4)
+    //     resolve(5)
+    // }).then((data) => {
+    //     //此回调成为callback2，promise属于microtask，所以放到MI中
+    //     console.log(data);
+    // })
+    // setTimeout(() => {//宏队列
+    //     //函数回调callback3 setTimeout属于Macrotask 所以放到MA中
+    //     console.log(6);
+    // })
+    // console.log(7);
+    /*
+    *  Stack Queue:[] 调用栈  后面简称ST
+    *  Macrotask Queue: []  //宏队列 后面简称 MA
+    *  Microtask Queue: []  //微队列 后面简称 MI
+    * */
+    //第一步 ST:[console.log]  MA:[] MI:[] 直接执行console.log(1)
+    //输出1
+
+    //第二  ST:[setTimeout]  MA:[callback1] MI:[]
+    //输出1
+
+    //第三  ST:[promise]  MA:[callback1] MI:[callback2]
+    //输出 1 4
+
+    //第四  ST:[setTimeout]  MA:[callback1,callback3] MI:[callback2]
+    //输出 1 4
+
+    //第五  ST:[console]  MA:[callback1,callback3] MI:[callback2]
+    //输出 1 4 7
+
+    //全局Script代码执行完了，进入下一个步骤，从microtask queue中依次取出任务执行，直到microtask queue队列为空
+
+    //第六 执行MI中的 callback2
+    //ST:[callback2]  MA:[callback1,callback3] MI:[]
+    //callback2 为console.log(data)  data为primise的值为5
+    //输出 1 4 7 5
+
+    //microtask queue中只有一个任务，执行完后开始从宏任务队列macrotask queue中取位于队首的任务执行
+
+    //第七 执行MA中的第一个callback3
+    //ST:[callback1]  MA:[callback3] MI:[]
+    //输出 1 4 7 5 2
+
+    //callback1 中包含另一个Promise Promise异步执行完后在microtask queue中又注册了一个callback4回调函数
+    //ST:[Promise]  MA:[callback3] MI:[callback4]
+    //输出 1 4 7 5 2
+
+    //第八 再去微队列中执行
+    //ST:[callback4]  MA:[callback3] MI:[]
+    //输出 1 4 7 5 2 3
+
+    //第九 执行MA中callback3
+    //ST:[callback3]  MA:[] MI:[]
+    //输出 1 4 7 5 2 3 6
+
+
+
+
+
+    console.log(1);
+
+    setTimeout(() => {
+        console.log(2);
+        Promise.resolve().then(() => {
+            console.log(3)
+        });
+    });
+
+    new Promise((resolve, reject) => {
+        console.log(4)
+        resolve(5)
+    }).then((data) => {
+        console.log(data);
+
+        Promise.resolve().then(() => {
+            console.log(6)
+        }).then(() => {
+            console.log(7)
+
+            setTimeout(() => {
+                console.log(8)
+            }, 0);
+        });
+    })
+
+    setTimeout(() => {
+        console.log(9);
+    })
+
+    console.log(10);
+
+
+    //1 4 10 5 6 7 2 3 9 8
+</script>
+</body>
+</html>

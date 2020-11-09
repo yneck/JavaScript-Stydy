@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+    * 1、Set  新的数据接口  类似于数组，但是成员都是唯一的，没有重复的值
+    * */
+    const s=new Set();
+    [1,1,1,1,22,3,4,5,6,6].forEach(item=>{
+        s.add(item)
+    })
+    // console.log(...s);
+    // console.log(s.size);
+    // console.log([...s]);
+    //set实现交集（Intersect）、并集（Union）、差集（Difference）
+    let set1=new Set([1,2,3]);
+    let set2=new Set([2,3,4]);
+    let Intersect=new Set([...set1].filter(val=>set2.has(val)))
+    let Union=new Set([...set1,...set2])
+    let Difference=new Set([...set1].filter(val=>!set2.has(val)))
+    console.log(Intersect);
+    console.log(Union);
+    console.log(Difference);
+</script>
+</body>
+</html>
