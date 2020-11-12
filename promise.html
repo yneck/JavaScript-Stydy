@@ -6,9 +6,189 @@
 </head>
 <body>
 <script>
+    /*
+    *
+    * */
+    // console.dir(Promise)
+    // let promise=new Promise((resolve,reject)=>{
+    //     let number=Math.floor(Math.random()*10)
+    //     if (number>5){
+    //         resolve(number) // resolve 相当于解决的意思 对应then
+    //     }else {
+    //         reject(number) // reject 相当于没解决  对应catch
+    //     }
+    // })
+    //
+    // promise.then(res=>{
+    //     console.log(res+'大于5')
+    // }).catch(res=>{
+    //     console.log(res+'小于等于5')
+    // }).finally(res=>{
+    //     //不管成功没成功都会走这里
+    //     console.log('不管成功没成功，我都最牛逼')
+    // })
+    /*
+    * start
+    * */
+    // const promise1 = new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve('success');
+    //     }, 0);
+    // });
+    //
+    // const promise2 = promise1.then(() => {
+    //     throw new Error('error!');
+    // });
+    //
+    // console.log('promise1-1', promise1);
+    // console.log('promise2-1', promise2);
+    /*
+    * end
+    * */
+
+
+    /*
+    * start
+    * */
+    /*  const promise1 = new Promise((resolve, reject) => {
+          setTimeout(() => {
+              resolve('success');
+              console.log('timer1');//4
+          }, 0);
+
+          console.log('promise1 里面的内容');//1
+      });
+
+      const promise2 = promise1.then(() => {
+          throw new Error('error!');
+      });
+
+      console.log('promise1-1', promise1);//2
+      console.log('promise2-1', promise2);//3
+
+      setTimeout(() => {
+          console.log('timer2');//5
+          console.log('promise1-1', promise1);//6
+          console.log('promise2-2', promise2);//7err
+      }, 0);*/
+    /*
+    * end
+    * */
 
 
 
+    /*
+    * start
+    * */
+    /* const promise = new Promise((resolve, reject) => {
+         setTimeout(() => {
+             console.log('timer');
+             resolve('success');
+         }, 0);
+     });
+
+     const start = Date.now();
+
+     promise.then((res) => {
+         console.log(res, Date.now() - start);
+     });
+
+     promise.then((res) => {
+         console.log(res, Date.now() - start);
+     });*/
+    /*
+    * end
+    * */
+
+
+    // Promise
+    //     .resolve('1')
+    //     .then((res) => {
+    //         console.log(res);
+    //     }).finally(() => {
+    //     console.log('finally1');
+    // });
+    //
+    // Promise
+    //     .resolve('2')
+    //     .finally(() => {
+    //         console.log('finally2');
+    //         return '这里是 finally2';
+    //     }).then((res) => {
+    //     console.log('finally2 后面的 then 函数', res);
+    // })
+
+
+    /*
+    * 手写promise  简化版 功能严重缺失
+    * */
+    const PENDING = 'pending';
+    const RESOLVED = 'resolved';
+    const REJECTED = 'rejected';
+
+    function myPromise(fn) {
+        const that = this;
+        that.status = PENDING;
+        that.value = null;
+        that.reason = null;
+
+        that.resolveCallbacks = [];
+        that.rejectCallbacks = [];
+
+        function resolve(value) {
+            if (that.status === PENDING) {
+                that.status = RESOLVED;
+                that.value = value;
+                that.resolveCallbacks.map(cb => cb(value))
+            }
+        }
+        function reject(reason) {
+            if (that.status === PENDING) {
+                that.status = REJECTED;
+                that.reason = reason;
+                that.rejectCallbacks.map(cb => cb(reason))
+            }
+        }
+        try {
+            fn(resolve, reject)
+        } catch (e) {
+            reject(e)
+        }
+
+    }
+
+    myPromise.prototype.then = function (onFullfilled,onRejected) {
+        const that=this;
+        if (that.status===PENDING){
+            console.log(1);
+            that.resolveCallbacks.push(onFullfilled)
+            that.rejectCallbacks.push(onRejected)
+        }
+        if (that.status===RESOLVED){
+            console.log(2);
+            onFullfilled(that.value)
+        }
+        if (that.status===REJECTED){
+            console.log(3);
+            onRejected(that.reason)
+        }
+        return that;
+    }
+    let promise=new myPromise((resolve,reject)=>{
+        setTimeout(()=>{
+            reject(1000)
+        },10)
+    })
+    promise.then((value)=>{
+        console.log(value);
+        return value+'test'
+    },(value)=>{
+        console.log('执行失败' + value);
+    })
+    //     .then((res)=>{
+    //     console.log('yz'+res);
+    // })
+    console.log(promise);
 
 </script>
 </body>

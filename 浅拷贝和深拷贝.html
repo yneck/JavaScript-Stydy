@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function isTargetType(target) {
+        return Object.prototype.toString.call(target)
+    }
+
+    /*
+    * 浅拷贝
+    * */
+
+    function shallowClone(target) {
+        let result = null;
+        console.log(isTargetType(target));
+        if (isTargetType(target) === '[object Object]') {
+            result = {}
+        } else if (isTargetType(target) == '[object Array]') {
+            result = []
+        }
+        console.log(result);
+        for (let i in target) {
+            console.log(i);
+            if (target.hasOwnProperty(i)) {
+                result[i] = target[i]
+            }
+        }
+        return result;
+    }
+
+    // let arr=[11,11,21,31,41];
+    // let arr2=shallowClone(arr)
+    // console.log(arr2);
+    // arr[2]=5;
+    // console.log(arr2);
+    // console.log(arr);
+
+
+    /*
+    *
+    * 深拷贝
+    * */
+    function deepClone(target) {
+        let result = null;
+        if (isTargetType(target) === '[object Object]') {
+            result = {}
+        } else if (isTargetType(target) == '[object Array]') {
+            result = []
+        }else {
+            return  target;
+        }
+        for (let i in target) {
+            if (target.hasOwnProperty(i)) {
+                if (typeof target[ i ] === 'object') {
+                    result[i] = deepClone(target[i])
+                } else {
+                    result[i] = target[i]
+                }
+            }
+
+        }
+        return result;
+    }
+
+    let obj = {
+        'a': 1,
+        b: [1, 2, 3],
+        c: {
+            name: "c"
+        },
+        d: function () {
+            console.log(12321)
+        }
+    }
+
+    let cloneObj = deepClone(obj)
+
+    cloneObj['b'][2] = 5;
+    cloneObj.c.name = '222'
+    console.log(cloneObj);
+    console.log(obj);
+</script>
+</body>
+</html>

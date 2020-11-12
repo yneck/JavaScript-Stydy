@@ -6,28 +6,28 @@
 </head>
 <body>
 <script>
-    // console.log(1);
-    // setTimeout(() => {//宏队列
-    //     //回调函数成为callback1 setTimeout属于Macrotask 所以放到MA中
-    //     console.log(2);
-    //     Promise.resolve().then(() => {
-    //         //callback4
-    //         console.log(3)
-    //     });
-    // });
-    // new Promise((resolve, reject) => {
-    //     //promise这里是同步执行
-    //     console.log(4)
-    //     resolve(5)
-    // }).then((data) => {
-    //     //此回调成为callback2，promise属于microtask，所以放到MI中
-    //     console.log(data);
-    // })
-    // setTimeout(() => {//宏队列
-    //     //函数回调callback3 setTimeout属于Macrotask 所以放到MA中
-    //     console.log(6);
-    // })
-    // console.log(7);
+    console.log(1);
+    setTimeout(() => {//宏队列
+        //回调函数成为callback1 setTimeout属于Macrotask 所以放到MA中
+        console.log(2);
+        Promise.resolve().then(() => {
+            //callback4
+            console.log(3)
+        });
+    });
+    new Promise((resolve, reject) => {
+        //promise这里是同步执行
+        console.log(4)
+        resolve(5)
+    }).then((data) => {
+        //此回调成为callback2，promise属于microtask，所以放到MI中
+        console.log(data);
+    })
+    setTimeout(() => {//宏队列
+        //函数回调callback3 setTimeout属于Macrotask 所以放到MA中
+        console.log(6);
+    })
+    console.log(7);
     /*
     *  Stack Queue:[] 调用栈  后面简称ST
     *  Macrotask Queue: []  //宏队列 后面简称 MA
