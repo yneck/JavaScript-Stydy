@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+    * 1、冒泡排序
+    * */
+    function bubblingSort(arr) {
+        let length=arr.length;
+        for (let i=0;i<length;i++){
+            for (let j=1;j<length;j++){
+                if (arr[j-1]>arr[j]){
+                    let temp=arr[j];
+                    arr[j]=arr[j-1];
+                    arr[j-1]=temp;
+                }
+            }
+        }
+        return arr;
+    }
+    let arr=[3,1,8,5,11,222];
+    // console.log(bubblingSort(arr));
+
+    /*
+    * 2、快速排序
+    * */
+    function fastSort(arr) {
+        if (arr.length <= 1) { return arr;}
+        let left=[],right=[],pivotIndex=Math.floor(arr.length/2);
+        let pivot=arr[pivotIndex]
+        for (let i=0;i<arr.length;i++){
+            if (arr[i]>pivot){
+                right.push(arr[i])
+            }
+            if (arr[i]<pivot){
+                left.push(arr[i])
+            }
+        }
+
+        return fastSort(left).concat([pivot],fastSort(right))
+    }
+    // let arr2=[35,11,85,5,51,222];
+    // console.log(fastSort(arr2));
+
+    /*
+    * 3、选择排序
+    * */
+    function chooseSort(arr) {
+        let k,temp,length=arr.length;
+        for (let i=0;i<length;i++){
+            k=i;
+            for (let j=i+1;j<length;j++){
+                if (arr[j]<arr[k]){
+                    k=j;
+                }
+            }
+            temp=arr[k];
+            arr[k]=arr[i];
+            arr[i]=temp;
+        }
+        return arr;
+    }
+    // let arr3=[35,11,85,5,51,222];
+    // console.log(chooseSort(arr3));
+
+    /*
+    * 4、插入排序
+    * */
+    function insertSort(arr) {
+        let length=arr.length;
+        let prveIndex,current;
+        for (let i=1;i<length;i++){
+            prveIndex=i-1;
+            current=arr[i];
+            while (prveIndex>=0 && arr[prveIndex]>current ){
+                arr[prveIndex+1]=arr[prveIndex];
+                prveIndex--;
+            }
+            arr[prveIndex+1]=current;
+        }
+        return arr;
+    }
+    let arr4=[35,11,85,5,51,222];
+    console.log(insertSort(arr4));
+</script>
+</body>
+</html>
